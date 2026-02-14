@@ -7,6 +7,45 @@
     <script src="./dist/index.js"></script>
 </head>
 <body>
+    <input type="text" x_input="nama" value="asdsad">
+    <input type="email" x_input="email" value="aaaaaaaaaa">
+    <br>
+  <form id="grup_check">
+    <input type="checkbox" value="apple" x_input="checkbox_"> Apple<br>
+    <input type="checkbox" value="banana" x_input="checkbox_"> Banana<br>
+    <input type="checkbox" value="orange" x_input="checkbox_"> Orange<br>
+    <button onclick="login_form.method.getData()" type="button">asdsa</button>
+    <input type="text" x_ref="input_ref">
+
+</form>
+    <script>
+    let timeout
+    let login_form = new Landaxs().defineInput({
+        nama : "rakhmadi",
+        checkbox_ : ["banana"],
+        email : "rakuko@gmail.com"
+    }).triggerInput(["nama","email"],(e)=>{
+        clearTimeout(timeout)
+        timeout = setTimeout(()=>{
+            console.log(e.nama);
+        },300)
+    }).triggerInput("checkbox_",()=>{
+        console.log(login_form.data_input.checkbox_);
+        login_form.setInput("nama","helleo from cahnge")
+    }).setRef(["input_ref"]).methods({
+        getData(){
+            console.log("im from method " + login_form.data_input.nama );
+            
+            console.log();
+        },
+    })
+
+    login_form.data_ref.input_ref.addEventListener("input",(e)=>{
+        console.log(e);
+    })
+    
+    </script>
+
     
 </body>
 </html>
