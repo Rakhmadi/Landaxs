@@ -1,32 +1,44 @@
 "use strict";
 class Landaxs {
     constructor() {
-        this.data_input = {};
+        this._data = {};
+        this.input = {};
         this.input_details = [];
         this.data_ref = {};
         this.method = {};
     }
     defineInput(data) {
-        this.data_input = data;
+        this._data = data;
+        this.input = new Proxy(this._data, {
+            set: (target, key, value) => {
+                target[key] = value;
+                document.querySelectorAll(`[x_input='${key}']`).forEach(ctx => {
+                    ctx.value = value;
+                    this._data[key] = value;
+                });
+                return true;
+            }
+        });
         let input_details = [];
-        for (let [key, value] of Object.entries(this.data_input)) {
+        for (let [key, value] of Object.entries(this._data)) {
             document.querySelectorAll(`[x_input='${key}']`).forEach((ctx) => {
                 input_details.push({
                     name_input: key,
                     type_input: ctx.type,
-                    type_variable: typeof this.data_input[key],
+                    type_variable: typeof this._data[key],
                 });
                 if (ctx.type === "radio") {
-                    if (ctx.value === this.data_input[key]) {
+                    ctx.setAttribute("name", key);
+                    if (ctx.value === this._data[key]) {
                         ctx.checked = true;
                     }
                     ctx.addEventListener("change", (e) => {
                         let target = e.currentTarget;
-                        this.data_input[key] = target.value;
+                        this._data[key] = target.value;
                     });
                 }
                 else if (ctx.type === "checkbox") {
-                    this.data_input[key].forEach((ctx2) => {
+                    this._data[key].forEach((ctx2) => {
                         if (ctx.value === ctx2) {
                             ctx.checked = true;
                         }
@@ -34,20 +46,26 @@ class Landaxs {
                     ctx.addEventListener("input", (e) => {
                         let target = e.currentTarget;
                         if (target.checked) {
-                            this.data_input[key].push(target.value);
+                            this._data[key].push(target.value);
                         }
                         else {
-                            this.data_input[key] = this.data_input[key].filter((item) => {
+                            this._data[key] = this._data[key].filter((item) => {
                                 return item !== target.value;
                             });
                         }
                     });
                 }
+                else if (ctx.type === "file") {
+                    ctx.addEventListener("change", (e) => {
+                        let target = e.target;
+                        this._data[key] = target.files;
+                    });
+                }
                 else {
-                    ctx.value = this.data_input[key];
+                    ctx.value = this._data[key];
                     ctx.addEventListener("input", (e) => {
                         let target = e.currentTarget;
-                        this.data_input[key] = target.value;
+                        this._data[key] = target.value;
                     });
                 }
             });
@@ -64,27 +82,34 @@ class Landaxs {
         });
         return this;
     }
-    setInput(name_input_string, value) {
-        document.querySelectorAll(`[x_input='${name_input_string}']`).forEach(ctx => {
-            ctx.value = value;
-            this.data_input[name_input_string] = value;
-        });
-        return this;
-    }
     triggerInput(name_input, callback) {
         if (typeof name_input === "string") {
             document.querySelectorAll(`[x_input='${name_input}']`).forEach(ctx => {
-                ctx.addEventListener("input", (e) => {
-                    callback(this.data_input);
-                });
+                if (ctx.type === "file") {
+                    ctx.addEventListener("change", (e) => {
+                        callback(this._data);
+                    });
+                }
+                else {
+                    ctx.addEventListener("input", (e) => {
+                        callback(this._data);
+                    });
+                }
             });
         }
         else {
             name_input.forEach(ctx => {
                 document.querySelectorAll(`[x_input='${ctx}']`).forEach(ctx => {
-                    ctx.addEventListener("input", (e) => {
-                        callback(this.data_input);
-                    });
+                    if (ctx.type === "file") {
+                        ctx.addEventListener("change", (e) => {
+                            callback(this._data);
+                        });
+                    }
+                    else {
+                        ctx.addEventListener("input", (e) => {
+                            callback(this._data);
+                        });
+                    }
                 });
             });
         }

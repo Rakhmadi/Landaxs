@@ -1,35 +1,53 @@
 class Landaxs {
-    
-    public data_input:Record<string,any> = {}
+    private _data: Record<string, any> = {}
+    public input:Record<string,any> = {}
     public input_details:Array<Record<string, any>> = []
     public data_ref:Record<string,any> = {}
     public method:Record<string, (...args: any[]) => any> = {}
     
     defineInput(data:Record<string,any>):this{
-        this.data_input = data
+
+        this._data = data
+
+        this.input = new Proxy(this._data,{
+            set:(target, key: string, value)=>{
+                target[key] = value
+
+                    document.querySelectorAll<HTMLInputElement>(`[x_input='${key}']`).forEach(ctx=>{
+                        ctx.value = value
+                        this._data[key] = value
+                    })
+
+                return true
+            }
+        })
+
         let input_details: Array<Record<string, any>> = []
 
-        for(let [key,value] of Object.entries(this.data_input)){
+        for(let [key,value] of Object.entries(this._data)){
 
             document.querySelectorAll<HTMLInputElement>(`[x_input='${key}']`).forEach((ctx)=>{
 
             input_details.push({
                 name_input : key,
                 type_input : ctx.type,
-                type_variable : typeof this.data_input[key],
+                type_variable : typeof this._data[key],
             })
 
             if (ctx.type === "radio") {
-                if(ctx.value === this.data_input[key]){
+                
+                ctx.setAttribute("name",key)
+
+                if(ctx.value === this._data[key]){
                     ctx.checked = true
                 }
                 ctx.addEventListener("change",(e)=>{
                     let target = e.currentTarget as HTMLInputElement
-                    this.data_input[key] = target.value
+                    this._data[key] = target.value
                 })
 
             }else if(ctx.type === "checkbox"){
-                this.data_input[key].forEach((ctx2: string)=>{
+                this._data[key].forEach((ctx2: string)=>{
                     if(ctx.value === ctx2){
                         ctx.checked = true
                     }
@@ -40,19 +58,24 @@ class Landaxs {
                     let target = e.currentTarget as HTMLInputElement
                     
                     if(target.checked){
-                        this.data_input[key].push(target.value)    
+                        this._data[key].push(target.value)    
                     }else{
-                        this.data_input[key] = this.data_input[key].filter((item:any)=>{
+                        this._data[key] = this._data[key].filter((item:any)=>{
                             return item !== target.value
                         })
                     }
                 })
 
+            }else if(ctx.type === "file"){
+                ctx.addEventListener("change",(e)=>{
+                    let target = e.target as HTMLInputElement
+                    this._data[key] = target.files
+                })
             }else{
-                ctx.value = this.data_input[key]
+                ctx.value = this._data[key]
                 ctx.addEventListener("input",(e)=>{
                     let target = e.currentTarget as HTMLInputElement
-                    this.data_input[key] = target.value
+                    this._data[key] = target.value
                 })
             }
         })
@@ -74,28 +97,33 @@ class Landaxs {
         return this
     }
 
-    setInput(name_input_string:string,value:any):this{
-        document.querySelectorAll<HTMLInputElement>(`[x_input='${name_input_string}']`).forEach(ctx=>{
-            ctx.value = value
-            this.data_input[name_input_string] = value
-        })
-
-        return this
-    }
-
     triggerInput(name_input:string | Array<string>,callback:Function):this{
         if(typeof name_input === "string"){
-            document.querySelectorAll(`[x_input='${name_input}']`).forEach(ctx=>{
-                ctx.addEventListener("input",(e)=>{
-                    callback(this.data_input);
-                })
+            document.querySelectorAll<HTMLInputElement>(`[x_input='${name_input}']`).forEach(ctx=>{
+                if(ctx.type === "file"){
+                    ctx.addEventListener("change",(e)=>{
+                        callback(this._data);
+                    })
+                }else{
+                    ctx.addEventListener("input",(e)=>{
+                        callback(this._data);
+                    })
+                }
+
+
             })
         }else{
             name_input.forEach(ctx=>{
-                document.querySelectorAll(`[x_input='${ctx}']`).forEach(ctx=>{
-                    ctx.addEventListener("input",(e)=>{
-                        callback(this.data_input);
+                document.querySelectorAll<HTMLInputElement>(`[x_input='${ctx}']`).forEach(ctx=>{
+                if(ctx.type === "file"){
+                    ctx.addEventListener("change",(e)=>{
+                        callback(this._data);
                     })
+                }else{
+                    ctx.addEventListener("input",(e)=>{
+                        callback(this._data);
+                    })
+                }
                 })
             })
         }

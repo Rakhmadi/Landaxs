@@ -16,6 +16,21 @@
     <input type="checkbox" value="orange" x_input="checkbox_"> Orange<br>
     <button onclick="login_form.method.getData()" type="button">asdsa</button>
     <input type="text" x_ref="input_ref">
+<br>
+<label>
+  <input type="radio" x_input="gender" value="male">
+  Male
+</label>
+
+<label>
+  <input type="radio" x_input="gender" value="female">
+  Female
+</label>
+
+<div x_ref="dom_div"></div>
+<button x_ref="btn">click me </button>
+
+<input type="file" x_input="file_upload" multiple/>
 
 </form>
     <script>
@@ -23,26 +38,30 @@
     let login_form = new Landaxs().defineInput({
         nama : "rakhmadi",
         checkbox_ : ["banana"],
-        email : "rakuko@gmail.com"
+        email : "rakuko@gmail.com",
+        gender : '',
+        file_upload : ''
     }).triggerInput(["nama","email"],(e)=>{
-        clearTimeout(timeout)
-        timeout = setTimeout(()=>{
-            console.log(e.nama);
-        },300)
+        console.log(e.nama);
     }).triggerInput("checkbox_",()=>{
-        console.log(login_form.data_input.checkbox_);
-        login_form.setInput("nama","helleo from cahnge")
-    }).setRef(["input_ref"]).methods({
+        console.log(login_form.input.checkbox_);
+        login_form.input.nama = "hell nah"
+    }).triggerInput("file_upload",(e)=>{
+        console.log(e.file_upload);
+    }).setRef(["input_ref","dom_div","btn"]).methods({
         getData(){
-            console.log("im from method " + login_form.data_input.nama );
-            
-            console.log();
+            login_form.data_ref.dom_div.innerText = JSON.stringify(login_form.input)
         },
     })
 
     login_form.data_ref.input_ref.addEventListener("input",(e)=>{
         console.log(e);
     })
+
+    login_form.data_ref.btn.onclick = (e)=>{
+        e.preventDefault()
+        console.log("hello click me");
+    }
     
     </script>
 
