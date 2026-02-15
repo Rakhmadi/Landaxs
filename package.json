@@ -1,26 +1,27 @@
 {
-  "name": "@rakhmadi/landaxs",
+  "name": "landaxs",
   "version": "1.0.0",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "rakhmadi",
-  "license": "MIT",
-  "description": "Landaxs is library for dynamically managing input forms, supporting two-way binding and event handling with clean syntax.",
-  "devDependencies": {
-    "typescript": "^5.9.3"
-  },
-  "dependencies": {
-    "nodemon": "^3.1.11"
+  "description": "Landaxs is a lightweight library for dynamic input binding with two-way data flow.",
+  "keywords": ["forms", "binding", "javascript", "typescript"],
+  "homepage": "https://github.com/Rakhmadi/Landaxs#readme",
+  "bugs": {
+    "url": "https://github.com/Rakhmadi/Landaxs/issues"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Rakhmadi/Landaxs.git"
   },
-  "bugs": {
-    "url": "https://github.com/Rakhmadi/Landaxs/issues"
+  "license": "MIT",
+  "author": "rakhmadi",
+  "type": "commonjs",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": ["dist"],
+  "scripts": {
+    "build": "tsc",
+    "prepublishOnly": "npm run build"
   },
-  "homepage": "https://github.com/Rakhmadi/Landaxs#readme"
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  }
 }

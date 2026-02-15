@@ -177,5 +177,3 @@ class Landaxs {
         return this
     }
 }
-
-export default Landaxs

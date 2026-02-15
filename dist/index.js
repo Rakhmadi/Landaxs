@@ -1,3 +1,4 @@
+"use strict";
 class Landaxs {
     constructor() {
         this._data = {};

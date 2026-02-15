@@ -9,4 +9,3 @@ declare class Landaxs {
     triggerInput(name_input: string | Array<string>, callback: Function): this;
     methods(function_parameter: Record<string, (...args: any[]) => any>): this;
 }
-export default Landaxs;
