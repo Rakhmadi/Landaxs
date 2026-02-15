@@ -4,67 +4,116 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <script src="./dist/index.js"></script>
+<script src="./dist/index.js"></script>
+<style>
+    .form-control {
+        display: flex;
+        flex-direction: column;
+        width: min-content;
+    }
+</style>
 </head>
 <body>
-    <input type="text" x_input="nama" value="asdsad">
-    <input type="email" x_input="email" value="aaaaaaaaaa">
-    <br>
-  <form id="grup_check">
-    <input type="checkbox" value="apple" x_input="checkbox_"> Apple<br>
-    <input type="checkbox" value="banana" x_input="checkbox_"> Banana<br>
-    <input type="checkbox" value="orange" x_input="checkbox_"> Orange<br>
-    <button onclick="login_form.method.getData()" type="button">asdsa</button>
-    <input type="text" x_ref="input_ref">
-<br>
-<label>
-  <input type="radio" x_input="gender" value="male">
-  Male
-</label>
 
-<label>
-  <input type="radio" x_input="gender" value="female">
-  Female
-</label>
+<div x_ref="msg"></div>
 
-<div x_ref="dom_div"></div>
-<button x_ref="btn">click me </button>
+<form>
+<div class="form-control">
+    <label>Username</label>
+    <input x_ref="input_username" type="text" x_input="username">
+</div>
 
-<input type="file" x_input="file_upload" multiple/>
+<div class="form-control">
+    <label>Email</label>
+    <input type="email" x_input="email">
+</div>
+<div>
+    <label>Gender</label>
+    <label>
+        <input type="radio" x_input="gender" value="male"/>
+        Male
+    </label>
+    <label>
+        <input type="radio" x_input="gender" value="female"/>
+        Female
+    </label>
+</div>
+<div>
+    
+  <label>Role</label>
+
+  <label>
+    <input type="checkbox" x_input="role" value="admin">
+    Admin
+  </label>
+  <label>
+    <input type="checkbox" x_input="role" value="sales">
+    Sales
+  </label>
+  <label>
+    <input type="checkbox" x_input="role" value="employee">
+    Employee
+  </label>
+</div>
+<button type="button" onclick="form_login.method.send(this)">Save</button>
+<button type="button" onclick="form_login.method.clear()">clear</button>
 
 </form>
-    <script>
-    let timeout
-    let login_form = new Landaxs().defineInput({
-        nama : "rakhmadi",
-        checkbox_ : ["banana"],
-        email : "rakuko@gmail.com",
-        gender : '',
-        file_upload : ''
-    }).triggerInput(["nama","email"],(e)=>{
-        console.log(e.nama);
-    }).triggerInput("checkbox_",()=>{
-        console.log(login_form.input.checkbox_);
-        login_form.input.nama = "hell nah"
-    }).triggerInput("file_upload",(e)=>{
-        console.log(e.file_upload);
-    }).setRef(["input_ref","dom_div","btn"]).methods({
-        getData(){
-            login_form.data_ref.dom_div.innerText = JSON.stringify(login_form.input)
+<div x_ref="data"></div>
+
+<div x_ref="send_msg"></div>
+
+<script>
+
+
+    let form_login = new Landaxs()
+    
+    .defineInput({
+        username : "",
+        email: "",
+        gender : "male",
+        role : []
+    })
+    
+    .triggerInput(["username","email","gender","role"],(data)=>{
+        form_login.ref.data.textContent = JSON.stringify(data) 
+        form_login.method.validate()
+    })
+
+    .setRef(["data","msg","send_msg","input_username"])
+
+    .methods({
+        send : (e)=>{
+            if(form_login.method.validate()){
+                form_login.ref.send_msg.innerHTML = `<h4>Result</h4>${JSON.stringify(form_login.input)}`
+                form_login.method.clear()
+            }
         },
+        validate : ()=>{
+            if(form_login.input.username.length < 4){
+                form_login.ref.msg.textContent = "Length Username Must > 3"
+                form_login.ref.msg.style.color = "red"
+            }else if(!form_login.input.email.includes("@")){
+                form_login.ref.msg.textContent = "Input Must an Email"
+                form_login.ref.msg.style.color = "red"
+            }else{
+                form_login.ref.msg.textContent = "nice"
+                form_login.ref.msg.style.color = "green"
+                return true
+            }
+        },
+        clear : ()=>{
+            form_login.input.username = ""
+            form_login.input.email = ""
+            form_login.input.gender = ""
+            form_login.input.role = []
+            form_login.ref.input_username.focus()
+        }
     })
 
-    login_form.data_ref.input_ref.addEventListener("input",(e)=>{
-        console.log(e);
-    })
+    form_login.ref.data.textContent = JSON.stringify(form_login.input)
 
-    login_form.data_ref.btn.onclick = (e)=>{
-        e.preventDefault()
-        console.log("hello click me");
-    }
-    
-    </script>
 
-    
+</script>
 </body>
 </html>
