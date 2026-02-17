@@ -189,7 +189,7 @@ register a method to the methods property
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <script src="https://cdn.jsdelivr.net/npm/landaxs@1.0.1/dist/index.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/landaxs@1.0.2/dist/index.min.js"></script>
 <style>
     .form-control {
         display: flex;
