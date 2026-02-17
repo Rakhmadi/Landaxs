@@ -1,7 +1,6 @@
 Landaxs is library for dynamically managing input forms, supporting two-way binding and event handling with clean syntax.
 
 <img src="logo.png" width="200" />
-
 ## ✨ Features
 - Two-way data binding
 - Event handling
@@ -33,7 +32,7 @@ define the input tag input name into the input property
 
 <!-- in js -->
 <script>
-<!-- to define input name -->
+// to define input name
     let form_login = new Landaxs()
     .defineInput({
         username : "",
@@ -41,7 +40,7 @@ define the input tag input name into the input property
         gender : "male",
         role : []
     })
-<!-- to access input -->
+// to access input
 	form_login.input.username
 	form_login.input.email
 	form_login.input.gender
@@ -59,7 +58,7 @@ to trigger input from html
 >example
 ```html
 <script>
-<!-- to define input name -->
+//to define input name 
     let form_login = new Landaxs()
     .defineInput({
         username : "",
@@ -68,11 +67,11 @@ to trigger input from html
 	    console.log(data)
     })
 
-<!-- for single trigger input -->
+// for single trigger input 
 	.triggerInput("username",(data)=>{
-		    console.log(data) //print input property
+		    console.log(data) // print input property
 	})
-<!-- for mutiple trigger input -->
+// for mutiple trigger input
 	.triggerInput(["username","email"],(data)=>{
 		    console.log(data) //print input property
 	})
@@ -85,9 +84,10 @@ to trigger input from html
 
 >example
 ```html
+<!-- in html -->
 <div x_ref="msg"></div>
 <script>
-<!-- to define input name -->
+// to define input name 
     let form_login = new Landaxs()
     .defineInput({
         username : "",
@@ -96,12 +96,12 @@ to trigger input from html
 	    console.log(data)
     }).setRef(["msg"])
     
-<!-- for single ref -->
+// for single ref 
     .setRef("msg")
-<!-- for mutiple ref -->
-    .setRef(["msg"])
+// for mutiple ref
+    .setRef(["msg","msg2"])
     
-<!-- to access ref -->
+// to access ref
 	form_login.ref.msg.textContent = "hello world"
 </script>
 ```
@@ -109,9 +109,11 @@ to trigger input from html
 register a method to the methods property
 > 
 ```html
-<div x_ref="msg"></div>
+<!-- in html -->
+<button type="button" onclick="form_login.method.my_method">Save</button>
+
 <script>
-<!-- to define input name -->
+//to define input name 
     let form_login = new Landaxs()
     
     .defineInput({
