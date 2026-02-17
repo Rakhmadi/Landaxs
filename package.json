@@ -1,6 +1,6 @@
 {
   "name": "landaxs",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Landaxs is a lightweight library for dynamic input binding with two-way data flow.",
   "keywords": ["forms", "binding", "javascript", "typescript"],
   "homepage": "https://github.com/Rakhmadi/Landaxs#readme",

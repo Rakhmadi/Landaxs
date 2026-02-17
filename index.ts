@@ -14,8 +14,28 @@ class Landaxs {
                 target[key] = value
 
                     document.querySelectorAll<HTMLInputElement>(`[x_input='${key}']`).forEach(ctx=>{
-                        ctx.value = value
-                        this._data[key] = value
+                        if(ctx.type == "checkbox"){
+                            if(value.length === 0 ){
+                                ctx.checked = false  
+                            }else{
+                                // clear array checked change
+                                ctx.checked = false
+                                // checkied checkbox
+                                value.forEach((x:string)=>{
+                                    if(ctx.value === x){
+                                       ctx.checked = true
+                                    }
+                                })
+                            }
+                        }else if(ctx.type === "radio"){
+                            if(ctx.value === this._data[key]){
+                                ctx.checked = true
+                            }else{
+                                ctx.checked = false
+                            }
+                        }else{
+                            ctx.value = value
+                        }
                     })
 
                 return true
@@ -43,6 +63,7 @@ class Landaxs {
                     if(ctx.value === this._data[key]){
                         ctx.checked = true
                     }
+
                     ctx.addEventListener("change",(e)=>{
                         let target = e.currentTarget as HTMLInputElement
                         this._data[key] = target.value
@@ -50,6 +71,11 @@ class Landaxs {
 
                 }else if(ctx.type === "checkbox"){
                     ctx.setAttribute("name",`${key}[]`)
+                    
+                    if(typeof this._data[key] === "string"){
+                        this._data[key] = []
+                    }
+
                     this._data[key].forEach((ctx2: string)=>{
                         if(ctx.value === ctx2){
                             ctx.checked = true
@@ -92,14 +118,16 @@ class Landaxs {
                     name_input : key,
                     type_input : "select",
                     type_variable : typeof this._data[key],
-                })
+                })  
+                // if type select string chaneg to array 
+                if(typeof this._data[key] === "string"){
+                    this._data[key] = []
+                }
                 
-                let cx:Array<string> = []
                 this._data[key].forEach((ctx2:string)=>{
                    for (let i = 0; i < ctx.options.length; i++) {
                     if(ctx.options[i].value === ctx2){
                         ctx.options[i].selected = true
-                            cx.push(ctx2)
                     }
                    }
                     
@@ -130,10 +158,14 @@ class Landaxs {
 
     }
 
-    setRef(data:Array<string>):this{
-        data.forEach(ctx=>{
-            this.ref[ctx] = document.querySelectorAll(`[x_ref='${ctx}']`)[0]
-        })
+    setRef(data: string | Array<string>):this{
+        if(typeof data === "string"){
+            this.ref[data] = document.querySelectorAll(`[x_ref='${data}']`)[0]
+        }else{
+            data.forEach(ctx=>{
+                this.ref[ctx] = document.querySelectorAll(`[x_ref='${ctx}']`)[0]
+            })
+        }
         return this
     }
 
@@ -173,7 +205,7 @@ class Landaxs {
 
     
     methods(function_parameter:Record<string, (...args: any[]) => any>):this{
-        this.method = function_parameter
+        this.method = {...this.method,...function_parameter}
         return this
     }
 }

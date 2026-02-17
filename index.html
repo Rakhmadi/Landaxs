@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-<script src="
-https://cdn.jsdelivr.net/npm/landaxs@1.0.0/dist/index.min.js
-"></script><style>
+    <script src="./dist/index.js"></script>
+
+<style>
     .form-control {
         display: flex;
         flex-direction: column;
@@ -108,7 +108,12 @@ https://cdn.jsdelivr.net/npm/landaxs@1.0.0/dist/index.min.js
             form_login.input.email = ""
             form_login.input.gender = ""
             form_login.input.role = []
+            form_login.ref.data.textContent = JSON.stringify(form_login.input) 
             form_login.ref.input_username.focus()
+        }
+    }).methods({
+        hello:()=>{
+            console.log("helo");
         }
     })
 

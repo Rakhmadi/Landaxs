@@ -5,7 +5,7 @@ declare class Landaxs {
     ref: Record<string, any>;
     method: Record<string, (...args: any[]) => any>;
     defineInput(data: Record<string, any>): this;
-    setRef(data: Array<string>): this;
+    setRef(data: string | Array<string>): this;
     triggerInput(name_input: string | Array<string>, callback: Function): this;
     methods(function_parameter: Record<string, (...args: any[]) => any>): this;
 }
