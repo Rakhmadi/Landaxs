@@ -10,7 +10,7 @@ Landaxs is library for dynamically managing input forms, supporting two-way bind
 CDN
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/landaxs@1.0.1/dist/index.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/landaxs@1.0.1/dist/index.min.js"></script>]
 ```
 
 ### Define input name
