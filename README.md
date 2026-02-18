@@ -45,6 +45,12 @@ define the input tag input name into the input property
 	form_login.input.email
 	form_login.input.gender
 	form_login.input.role
+
+// to change input
+	form_login.input.username = "Darent"
+	form_login.input.email = "darent@example.com"
+	form_login.input.gender = "male"
+	form_login.input.role = "admin"
 </script>
 ```
 
