@@ -79,6 +79,8 @@
     .triggerInput(["username","email","gender","role"],(data)=>{
         form_login.ref.data.textContent = JSON.stringify(data) 
         form_login.method.validate()
+        console.log(form_login.input);
+        
     })
 
     .setRef(["data","msg","send_msg","input_username"])
@@ -93,13 +95,19 @@
         validate : ()=>{
             if(form_login.input.username.length < 4){
                 form_login.ref.msg.textContent = "Length Username Must > 3"
-                form_login.ref.msg.style.color = "red"
+                form_login.setStyle({
+                    color : "red"
+                })
             }else if(!form_login.input.email.includes("@")){
                 form_login.ref.msg.textContent = "Input Must an Email"
-                form_login.ref.msg.style.color = "red"
+                form_login.setStyle({
+                    color : "red"
+                })
             }else{
                 form_login.ref.msg.textContent = "nice"
-                form_login.ref.msg.style.color = "green"
+                form_login.setStyle({
+                    color : "green"
+                })
                 return true
             }
         },
@@ -117,7 +125,24 @@
         }
     })
 
+
+    form_login.ref.data.addEventListener("mouseenter",()=>{
+        form_login.setStyle("data",{
+            color : "white",
+            backgroundColor : "black"
+        })
+    })
+
+    form_login.ref.data.addEventListener("mouseleave",()=>{
+        form_login.setStyle("data",{
+            color : "white",
+            backgroundColor : "blue"
+        })
+    })
+
     form_login.ref.data.textContent = JSON.stringify(form_login.input)
+
+
 
 
 </script>

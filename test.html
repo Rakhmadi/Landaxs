@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./dist/index.js"></script>
+
+</head>
+<body>
+<input type="text" x_input="name_input">
+<div x_ref="area_div">asdsad</div>
+<div x_ref="area_div">asdsad</div>
+<div x_ref="area_div">asdsad</div>
+<div x_ref="area_div">asdsad</div>
+<div x_ref="area_div">asdsad</div>
+
+<script>
+
+
+    let lan = new Landaxs()
+    
+    .defineInput({
+       name_input : "Landaxs"
+    })
+
+    .setRef("area_div")
+
+    console.log();
+
+    lan.ref.area_div.forEach(element => {
+        element.addEventListener("click",(e)=>{
+            element.textContent =  Math.floor(Math.random() * 10);
+        })
+    });
+    
+
+
+
+
+
+    
+
+
+</script>
+</body>
+</html>

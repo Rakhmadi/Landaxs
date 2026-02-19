@@ -11,8 +11,7 @@ class Landaxs {
 
         this.input = new Proxy(this._data,{
             set:(target, key: string, value)=>{
-                target[key] = value
-
+                target[key] = value                
                     document.querySelectorAll<HTMLInputElement>(`[x_input='${key}']`).forEach(ctx=>{
                         if(ctx.type == "checkbox"){
                             if(value.length === 0 ){
@@ -159,11 +158,30 @@ class Landaxs {
     }
 
     setRef(data: string | Array<string>):this{
+
+        let querySelectorLength = 1
+
+
         if(typeof data === "string"){
-            this.ref[data] = document.querySelectorAll(`[x_ref='${data}']`)[0]
+            
+            let dom_reference = document.querySelectorAll(`[x_ref='${data}']`)
+            
+            
+            if(dom_reference.length > querySelectorLength){
+                this.ref[data] = dom_reference
+            }else{
+                this.ref[data] = dom_reference[0]
+            }
+
         }else{
             data.forEach(ctx=>{
-                this.ref[ctx] = document.querySelectorAll(`[x_ref='${ctx}']`)[0]
+                let dom_reference = document.querySelectorAll(`[x_ref='${ctx}']`)
+                                
+                if(dom_reference.length > querySelectorLength){
+                    this.ref[ctx] = dom_reference
+                }else{
+                    this.ref[ctx] = dom_reference[0]
+                }
             })
         }
         return this
@@ -174,11 +192,12 @@ class Landaxs {
             document.querySelectorAll<HTMLInputElement>(`[x_input='${name_input}']`).forEach(ctx=>{
                 if(ctx.type === "file"){
                     ctx.addEventListener("change",(e)=>{
-                        callback(this._data);
+                        callback(this.input);
                     })
                 }else{
+                    
                     ctx.addEventListener("input",(e)=>{
-                        callback(this._data);
+                        callback(this.input);
                     })
                 }
 
@@ -203,7 +222,12 @@ class Landaxs {
         return this        
     }
 
-    
+    setStyle(name_reference:string,style:Record<string,any>){
+        for(let [key,value] of Object.entries(style)){
+            this.ref[name_reference].style[key] = value
+        }
+    }
+
     methods(function_parameter:Record<string, (...args: any[]) => any>):this{
         this.method = {...this.method,...function_parameter}
         return this
