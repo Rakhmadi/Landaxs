@@ -5,7 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script src="./dist/index.js"></script>
-
+<style>
+    .active{
+        color: blue;
+    }
+</style>
 </head>
 <body>
 <input type="text" x_input="name_input">
@@ -14,6 +18,8 @@
 <div x_ref="area_div">asdsad</div>
 <div x_ref="area_div">asdsad</div>
 <div x_ref="area_div">asdsad</div>
+
+<div x_ref="ref_class">asdsad</div>
 
 <script>
 
@@ -24,7 +30,7 @@
        name_input : "Landaxs"
     })
 
-    .setRef("area_div")
+    .setRef(["area_div","ref_class"])
 
     console.log();
 
@@ -33,6 +39,10 @@
             element.textContent =  Math.floor(Math.random() * 10);
         })
     });
+
+    lan.setClass("ref_class",{
+        active : true
+    })
     
 
 

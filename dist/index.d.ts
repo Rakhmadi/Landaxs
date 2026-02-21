@@ -8,5 +8,6 @@ declare class Landaxs {
     setRef(data: string | Array<string>): this;
     triggerInput(name_input: string | Array<string>, callback: Function): this;
     setStyle(name_reference: string, style: Record<string, any>): void;
+    setClass(name_reference: string, class_name: Record<string, any>): void;
     methods(function_parameter: Record<string, (...args: any[]) => any>): this;
 }

@@ -55,7 +55,7 @@ class Landaxs {
                         if (ctx.value === this._data[key]) {
                             ctx.checked = true;
                         }
-                        ctx.addEventListener("change", (e) => {
+                        ctx.addEventListener("input", (e) => {
                             let target = e.currentTarget;
                             this._data[key] = target.value;
                         });
@@ -193,6 +193,17 @@ class Landaxs {
     setStyle(name_reference, style) {
         for (let [key, value] of Object.entries(style)) {
             this.ref[name_reference].style[key] = value;
+        }
+    }
+    setClass(name_reference, class_name) {
+        for (let [key, value] of Object.entries(class_name)) {
+            let MATCH_VALUE = true;
+            if (value === MATCH_VALUE) {
+                this.ref[name_reference].classList.add(key);
+            }
+            else {
+                this.ref[name_reference].classList.remove(key);
+            }
         }
     }
     methods(function_parameter) {
