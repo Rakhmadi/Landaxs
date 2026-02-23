@@ -1,6 +1,5 @@
 Landaxs is library for dynamically managing input forms, supporting two-way binding and event handling with clean syntax.
 
-<img src="logo.png" width="200" />
 ## ✨ Features
 - Two-way data binding
 - Event handling
@@ -10,7 +9,7 @@ Landaxs is library for dynamically managing input forms, supporting two-way bind
 CDN
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/landaxs@1.0.2/dist/index.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/landaxs@1.0.1/dist/index.min.js"></script>
 ```
 
 ### Define input name
@@ -45,7 +44,6 @@ define the input tag input name into the input property
 	form_login.input.email
 	form_login.input.gender
 	form_login.input.role
-
 // to change input
 	form_login.input.username = "Darent"
 	form_login.input.email = "darent@example.com"
@@ -167,6 +165,35 @@ register a method to the methods property
     
 </script>
 ```
+
+### setStyle & setClas
+Apply styles and classes to Dom references
+> For set style
+```js
+
+const app = new Landaxs()
+app
+    .defineInput({ nama: "", email: "" })
+    .setRef(["tombol", "kotak", "pesan"])
+// Ubah style elemen
+app.setStyle("kotak", {
+    backgroundColor : "#1e1e2e",
+    color           : "white",
+    padding         : "16px",
+    borderRadius    : "8px",
+    fontSize        : "14px",
+    display         : "flex",
+    gap             : "8px"
+})
+```
+>for set class
+```js
+    app.setClass("pesan", {
+        "hidden"    :  true,
+        "text-red"  : !true,
+        "text-green":  false
+    })
+```
 ### properties and methods of the Landaxs class
 ### 📦 Properties (Internal State)
 
@@ -186,6 +213,8 @@ register a method to the methods property
 | `setRef`       | `string \| string[]`             | Registers DOM references using `x_ref`                       |
 | `triggerInput` | `string \| string[]`, `callback` | Executes callback when input value changes                   |
 | methods        | Record<string, Function>         | Registers external custom methods into the instance          |
+| setStyle       | `string \| sRecord<string, any>  | Set style to reference DOM                                   |
+| setClass       | `string \| Record<string, any>   | set Class to reference DOM                                   |
 >example use 
 ```html
 <!DOCTYPE html>
@@ -195,7 +224,7 @@ register a method to the methods property
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-<script src="https://cdn.jsdelivr.net/npm/landaxs@1.0.2/dist/index.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/landaxs@1.0.1/dist/index.min.js"></script>
 <style>
     .form-control {
         display: flex;

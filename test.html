@@ -12,38 +12,47 @@
 </style>
 </head>
 <body>
-<input type="text" x_input="name_input">
-<div x_ref="area_div">asdsad</div>
-<div x_ref="area_div">asdsad</div>
-<div x_ref="area_div">asdsad</div>
-<div x_ref="area_div">asdsad</div>
-<div x_ref="area_div">asdsad</div>
+<input type="text" x_input="nama" placeholder="Masukkan nama" />
+<input type="text" x_input="email" placeholder="Masukkan email" />
 
-<div x_ref="ref_class">asdsad</div>
+<button x_ref="tombol">Submit</button>
+<div x_ref="kotak">Kotak ini</div>
+<p x_ref="pesan">Pesan validasi</p>
 
 <script>
 
+const app = new Landaxs()
 
-    let lan = new Landaxs()
-    
-    .defineInput({
-       name_input : "Landaxs"
-    })
+app
+    .defineInput({ nama: "", email: "" })
+    .setRef(["tombol", "kotak", "pesan"])
 
-    .setRef(["area_div","ref_class"])
+// Ubah style elemen
+app.setStyle("kotak", {
+    backgroundColor : "#1e1e2e",
+    color           : "white",
+    padding         : "16px",
+    borderRadius    : "8px",
+    fontSize        : "14px",
+    display         : "flex",
+    gap             : "8px"
+})
 
-    console.log();
+app.setStyle("tombol", {
+    backgroundColor : "#7c3aed",
+    color           : "white",
+    border          : "none",
+    padding         : "10px 24px",
+    borderRadius    : "6px",
+    cursor          : "pointer"
+})
 
-    lan.ref.area_div.forEach(element => {
-        element.addEventListener("click",(e)=>{
-            element.textContent =  Math.floor(Math.random() * 10);
-        })
-    });
-
-    lan.setClass("ref_class",{
-        active : true
-    })
-    
+app.setStyle("pesan", {
+    color      : "red",
+    fontSize   : "12px",
+    fontWeight : "bold",
+    display    : "none"
+})
 
 
 
