@@ -9,7 +9,7 @@ Landaxs is library for dynamically managing input forms, supporting two-way bind
 CDN
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/landaxs@1.0.1/dist/index.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/landaxs@1.1.0/dist/index.min.js"></script>
 ```
 
 ### Define input name
@@ -224,7 +224,7 @@ app.setStyle("kotak", {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <script src="https://cdn.jsdelivr.net/npm/landaxs@1.0.1/dist/index.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/landaxs@1.1.0/dist/index.min.js"></script>
 <style>
     .form-control {
         display: flex;
