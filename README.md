@@ -1,5 +1,5 @@
 Landaxs is library for dynamically managing input forms, supporting two-way binding and event handling with clean syntax.
-
+<img src="logo.png" width="250"/>
 ## ✨ Features
 - Two-way data binding
 - Event handling
