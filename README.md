@@ -11,7 +11,7 @@ Landaxs is library for dynamically managing input forms, supporting two-way bind
 CDN
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/landaxs@1.1.0/dist/index.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/landaxs@latest/dist/index.min.js"></script>
 ```
 
 ### Define input name
@@ -58,8 +58,8 @@ define the input tag input name into the input property
 to trigger input from html
 **Parameters:**
 
-- `name_input` - Nama input (string) atau array nama input
-- `callback` - Function yang dijalankan saat input berubah (menerima `data_input` sebagai parameter)
+- `name_input` - Input name (string) or array of input names
+- `callback` - Function that is executed when the input changes (accepts `data_input` as a parameter)
 
 >example
 ```html
