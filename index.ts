@@ -45,7 +45,10 @@ class Landaxs {
 
         for(let [key,value] of Object.entries(this._data)){
 
-            document.querySelectorAll<HTMLInputElement | HTMLSelectElement>(`[x_input='${key}']`).forEach((ctx)=>{
+            console.log(key);
+            
+
+            document.querySelectorAll<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>(`[x_input='${key}']`).forEach((ctx:any)=>{
 
             if(ctx instanceof HTMLInputElement){
 
@@ -101,6 +104,7 @@ class Landaxs {
                         this._data[key] = target.files
                     })
                 }else{
+                    
                     ctx.setAttribute("name",key)
                     ctx.value = this._data[key]
                     ctx.addEventListener("input",(e)=>{
@@ -142,9 +146,48 @@ class Landaxs {
                    }
                 })          
 
+            }else if(ctx instanceof HTMLSelectElement){
+                
+                input_details.push({
+                    name_input : key,
+                    type_input : "select",
+                    type_variable : typeof this._data[key],
+                }) 
+                
+                ctx.setAttribute("name",key)
+                ctx.value = this._data[key]
+                ctx.addEventListener("input",(e)=>{
+                    let target = e.currentTarget as HTMLSelectElement
+                    this._data[key] = target.value
+                })
+                
+            }else if(ctx instanceof HTMLTextAreaElement){
+                input_details.push({
+                    name_input : key,
+                    type_input : "textarea",
+                    type_variable : typeof this._data[key],
+                }) 
+                
+                ctx.setAttribute("name",key)
+                ctx.value = this._data[key]
+                ctx.addEventListener("input",(e)=>{
+                    let target = e.currentTarget as HTMLSelectElement
+                    this._data[key] = target.value
+                })
+            }else{
+                input_details.push({
+                    name_input : key,
+                    type_input : "any",
+                    type_variable : typeof this._data[key],
+                }) 
+                
+                ctx.setAttribute("name",key)
+                ctx.value = this._data[key]
+                ctx.addEventListener("input",(e:any)=>{
+                    let target = e.currentTarget as HTMLSelectElement
+                    this._data[key] = target.value
+                })
             }
-
-            
         })
     } 
     

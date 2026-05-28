@@ -1,66 +1,115 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <script src="./dist/index.js"></script>
-<style>
-    .active{
-        color: blue;
-    }
-</style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <!-- Swiper CSS -->
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+    />
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <title>Fullscreen Swiper</title>
 </head>
-<body>
-<input type="text" x_input="nama" placeholder="Masukkan nama" />
-<input type="text" x_input="email" placeholder="Masukkan email" />
 
-<button x_ref="tombol">Submit</button>
-<div x_ref="kotak">Kotak ini</div>
-<p x_ref="pesan">Pesan validasi</p>
+<body class="overflow-hidden">
 
-<script>
+    <!-- Slider Fullscreen -->
+    <div class="swiper mySwiper w-screen h-screen">
 
-const app = new Landaxs()
+        <div class="swiper-wrapper">
 
-app
-    .defineInput({ nama: "", email: "" })
-    .setRef(["tombol", "kotak", "pesan"])
+            <!-- Slide 1 -->
+            <div class="swiper-slide">
+                <div class="relative w-full h-full">
 
-// Ubah style elemen
-app.setStyle("kotak", {
-    backgroundColor : "#1e1e2e",
-    color           : "white",
-    padding         : "16px",
-    borderRadius    : "8px",
-    fontSize        : "14px",
-    display         : "flex",
-    gap             : "8px"
-})
+                    <img
+                        src="https://picsum.photos/1920/1080?random=1"
+                        class="w-full h-full object-cover"
+                    />
 
-app.setStyle("tombol", {
-    backgroundColor : "#7c3aed",
-    color           : "white",
-    border          : "none",
-    padding         : "10px 24px",
-    borderRadius    : "6px",
-    cursor          : "pointer"
-})
+                    <div class="absolute inset-0 bg-black/40 flex items-center justify-center">
+                        <h1 class="text-white text-5xl font-bold">
+                            Slide Pertama
+                        </h1>
+                    </div>
 
-app.setStyle("pesan", {
-    color      : "red",
-    fontSize   : "12px",
-    fontWeight : "bold",
-    display    : "none"
-})
+                </div>
+            </div>
 
+            <!-- Slide 2 -->
+            <div class="swiper-slide">
+                <div class="relative w-full h-full">
 
+                    <img
+                        src="https://picsum.photos/1920/1080?random=2"
+                        class="w-full h-full object-cover"
+                    />
 
+                    <div class="absolute inset-0 bg-black/40 flex items-center justify-center">
+                        <h1 class="text-white text-5xl font-bold">
+                            Slide Kedua
+                        </h1>
+                    </div>
 
+                </div>
+            </div>
 
-    
+            <!-- Slide 3 -->
+            <div class="swiper-slide">
+                <div class="relative w-full h-full">
 
+                    <img
+                        src="https://picsum.photos/1920/1080?random=3"
+                        class="w-full h-full object-cover"
+                    />
 
-</script>
+                    <div class="absolute inset-0 bg-black/40 flex items-center justify-center">
+                        <h1 class="text-white text-5xl font-bold">
+                            Slide Ketiga
+                        </h1>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Pagination -->
+        <div class="swiper-pagination"></div>
+
+        <!-- Navigation -->
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+
+    </div>
+
+    <!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+    <script>
+        const swiper = new Swiper(".mySwiper", {
+            loop: true,
+
+            autoplay: {
+                delay: 3000,
+                disableOnInteraction: false,
+            },
+
+            pagination: {
+                el: ".swiper-pagination",
+                clickable: true,
+            },
+
+            navigation: {
+                nextEl: ".swiper-button-next",
+                prevEl: ".swiper-button-prev",
+            },
+        });
+    </script>
+
 </body>
 </html>

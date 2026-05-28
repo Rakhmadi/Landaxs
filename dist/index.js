@@ -43,6 +43,7 @@ class Landaxs {
         });
         let input_details = [];
         for (let [key, value] of Object.entries(this._data)) {
+            console.log(key);
             document.querySelectorAll(`[x_input='${key}']`).forEach((ctx) => {
                 if (ctx instanceof HTMLInputElement) {
                     input_details.push({
@@ -123,6 +124,45 @@ class Landaxs {
                                 this._data[key].push(target.options[i].value);
                             }
                         }
+                    });
+                }
+                else if (ctx instanceof HTMLSelectElement) {
+                    input_details.push({
+                        name_input: key,
+                        type_input: "select",
+                        type_variable: typeof this._data[key],
+                    });
+                    ctx.setAttribute("name", key);
+                    ctx.value = this._data[key];
+                    ctx.addEventListener("input", (e) => {
+                        let target = e.currentTarget;
+                        this._data[key] = target.value;
+                    });
+                }
+                else if (ctx instanceof HTMLTextAreaElement) {
+                    input_details.push({
+                        name_input: key,
+                        type_input: "textarea",
+                        type_variable: typeof this._data[key],
+                    });
+                    ctx.setAttribute("name", key);
+                    ctx.value = this._data[key];
+                    ctx.addEventListener("input", (e) => {
+                        let target = e.currentTarget;
+                        this._data[key] = target.value;
+                    });
+                }
+                else {
+                    input_details.push({
+                        name_input: key,
+                        type_input: "any",
+                        type_variable: typeof this._data[key],
+                    });
+                    ctx.setAttribute("name", key);
+                    ctx.value = this._data[key];
+                    ctx.addEventListener("input", (e) => {
+                        let target = e.currentTarget;
+                        this._data[key] = target.value;
                     });
                 }
             });

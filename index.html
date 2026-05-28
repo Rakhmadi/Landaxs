@@ -64,6 +64,14 @@
 
 <div x_ref="send_msg"></div>
 
+<select x_input="select_" id="">
+    <option value="asdsd1">1</option>
+    <option value="asdsd2">2</option>
+    <option value="asdsd3">3</option>
+</select>
+
+<textarea x_input="textarea" id="sa" ></textarea>
+
 <script>
 
 
@@ -73,13 +81,17 @@
         username : "",
         email: "",
         gender : "male",
-        role : []
+        role : [],
+        select_ : "asdsd1",
+        textarea : ""
     })
     
-    .triggerInput(["username","email","gender","role"],(data)=>{
+    .triggerInput(["username","email","gender","role","select_","textarea"],(data)=>{
         form_login.ref.data.textContent = JSON.stringify(data) 
         form_login.method.validate()
-        console.log(form_login.input);
+        // console.log(form_login.input);
+        console.log(data);
+        
         
     })
 
